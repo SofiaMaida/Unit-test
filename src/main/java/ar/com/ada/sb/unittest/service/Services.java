@@ -9,5 +9,4 @@ public interface Services<T> {
     T save(T dto);
 
     void delete(Long id);
-
 }

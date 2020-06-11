@@ -12,17 +12,18 @@ import java.util.Map;
 @RequestMapping("/test")
 public class TestController {
 
-    //2 endpoint -> /test/one && /test/two => GET => OK => {"status":"ok"}
+    // 2 endpoint /test/one y /test/two => GET => OK => {"status":"ok"}
 
-    @GetMapping({"/one", "/one/"})
-    private ResponseEntity testOne() {
+    @GetMapping({ "/one", "/one/"})
+    public ResponseEntity testOne() {
         Map<String, String> body = new HashMap<>();
         body.put("status", "ok");
         return ResponseEntity.ok(body);
     }
 
-    @GetMapping({"/two", "/two/"})
-    private ResponseEntity testTwo() {
+    @GetMapping({ "/two", "/two/"})
+    public ResponseEntity testTwo() {
         return ResponseEntity.ok(null);
     }
+
 }

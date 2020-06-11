@@ -1,6 +1,7 @@
-package ar.com.ada.sb.unittest.model.repository;
+package ar.com.ada.sb.unittest.repository;
 
 import ar.com.ada.sb.unittest.model.entity.Product;
+import ar.com.ada.sb.unittest.model.repository.ProductRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,35 +21,37 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ProductRepositoryTest {
+class ProductRepositoryTest {
 
-    @Autowired @Qualifier("productRepository")
+    @Autowired
+    @Qualifier("productRepository")
     private ProductRepository productRepository;
 
     @Test @Order(0)
     public void whenSaveThenReturnAnProductWithId() {
         //GIVEN
-        Product product = new Product().builder()
-                .name("Product 1")
-                .description("Desc 1")
-                .price(new BigInteger("10"))
-                .build();
+        Product product = new Product()
+                .setName("P1")
+                .setDescription("DESC 1")
+                .setPrice(new BigInteger("10"));
         //WHEN
         Product saved = productRepository.save(product);
+
         //THEN
         assertNotNull(saved.getId());
         assertNotNull(saved.getCreateAt());
         assertNotNull(saved.getUpdateAt());
-
     }
 
     @Test @Order(1)
     public void whenFindByNameThenReturnProduct() {
         //GIVEN
-        String productName = "Product 1";
+        String productName = "P1";
+
         //WHEN
         Optional<Product> byName = productRepository.findByName(productName);
         Product product = byName.get();
+
         //THEN
         assertEquals(true, byName.isPresent());
         assertEquals(productName, product.getName());
@@ -60,8 +63,8 @@ public class ProductRepositoryTest {
 
         //WHEN
         List<Product> productList = productRepository.findAll();
+
         //THEN
         assertThat(productList).hasSize(1);
     }
-
 }
